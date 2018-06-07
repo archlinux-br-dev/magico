@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+#
+# Arquivo: magico
+# Descrição: Um helper para baixar, atualizar e instalar pacotes do AUR (https://aur.archlinux.org)
+#
+# Feito por Arch Linux BR Dev Team (https://github.com/archlinux-br-dev)
+# Site do Projeto: https://archlinux-br-dev.github.io/magico
+# Repositório: https://github.com/archlinux-br-dev/magico
+#
+# Criado em:        31/05/2018 19:39:27
+# Última alteração: 07/06/2018 02:20:52
+
+### PROGRAMA EM FASE EXPERIMENTAL!!! ###
+
+#for pct in "${#at1[@]}"; do
+
+antigo=$(pwd)
+caminho="$HOME/.cache/magico"
+[ ! -d $caminho ] && mkdir -p $caminho
+
+
+# Cores
+rst='\033[0m'
+vermelho='\033[00;31m'
+verde='\033[00;32m'
+amarelo='\033[00;33m'
+azul='\033[00;34m'
+magenta='\033[00;35m'
+roxo='\033[00;35m'
+ciano='\033[00;36m'
+cinza='\033[00;37m'
+vermelhoc='\033[01;31m'
+verdec='\033[01;32m'
+amareloc='\033[01;33m'
+azulc='\033[01;34m'
+magentac='\033[01;35m'
+roxoc='\033[01;35m'
+cianoc='\033[01;36m'
+branco='\033[01;37m'
+
+baixar() {
+  local packages
+  local depends
+  packages=$(pacman -Sl)
+  cd $caminho || exit
+  for arg in "$@"; do
+    depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
+    if [[ $(echo -e "$depends" | jshon -e results) != "[]" ]]; then
+      git clone https://aur.archlinux.org/"$arg".git 2> /dev/null
+      echo -e ":: $arg downloaded $caminho/$arg"
+      if [[ $(echo -e "$depends" | jshon -e results -e 0 -e Depends) != "[]" ]]; then
+        depends=$(echo -e "$depends" | jshon -e results -e 0 -e Depends -a -u)
+        for dep in $depends; do
+          echo -e "$packages" | grep "$dep" > /dev/null
+          if [[ "$?" == 1 ]]; then
+            download "$dep"
+          fi
+        done
+      fi
+    fi
+  done
+}
+
+atualizar() {
+  n=0
+  declare -a pct
+
+  pacotes=$(pacman -Qqm)
+  [ ! "$pacotes" ] && echo -e ":: Nenhum pacote do AUR instalado." && exit 0
+
+  cd $caminho
+
+  for p in $pacotes; do
+    vlocal=$(pacman -Q $p | awk '{print $2}')
+    vremota=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r '.results[0].Version')
+    if [ $vlocal != $vremota ]; then
+      echo -e "${cinza}::${rst} ${azul}Analizando: $p -> $vlocal -> $vremota${rst}"
+      pct+="$p $vlocal $vremota"
+      let n++
+    fi
+  done
+
+  if [ $n > 0 ]; then
+    echo -e ":: Existem atualizações."
+
+    #for K in "${!MYMAP[@]}"; do echo $K --- ${MYMAP[$K]}; done
+    for e in "${!pct[@]}"; do
+      pa=$(echo ${pct[$e]} | awk '{print $1}')
+      old=$(echo ${pct[$e]} | awk '{print $2}')
+      new=$(echo ${pct[$e]} | awk '{print $3}')
+      #echo -e "$e $pa -> $old -> $new\n"
+      echo -e "$e $pa -> $old -> $new\n"
+      #printf "%s" "${sentence[$element]}"
+    done
+
+    #for pc in $n; do
+    #  echo -e ":: ${#pct[@]} ${pct[@]}"
+    #done
+  else
+    echo -e ":: Todos os pacotes estão atualizados."
+  fi
+}
+
+pesquisar() {
+  n=0
+  for p in "$@"; do
+    echo 
+    echo -e ":: Pesquisando $p no AUR..."
+    total=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=$p" | jq '.results | length')
+
+    if [ $total ]; then
+      while [[ $n < $total ]]; do
+        nome=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Name")
+        versao=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Version")
+        echo -e ":: [$n] aur/$nome $versao"
+        let n++
+      done
+    else
+      echo -e "Nenhum pacote com o nome $p encontrado."
+      echo
+    fi
+
+  done
+  echo
+  echo -e "Número de resultados: $total"
+}
+
+if [[ "$1" == "-Sw" ]]; then
+  shift
+  baixar "$@"
+elif [[ "$1" == "-Syu" ]]; then
+  atualizar
+elif [[ "$1" == "-Ss" ]]; then
+  shift
+  pesquisar "$@"
+elif [[ "$1" == "-S" ]]; then
+  shift
+  instalar "$@"
+else
+  echo -e "Uso: $(basename $0) -Syu"
+  echo -e "     $(basename $0) -S pacote"
+  echo -e "     $(basename $0) -Sw pacote"
+fi
