@@ -15,10 +15,10 @@
 command -v jq >/dev/null 2>&1 || { echo >&2 "O aplicativo jq não está instalado. Abortando."; exit 1; }
 command -v jshon >/dev/null 2>&1 || { echo >&2 "O aplicativo jshon não está instalado. Abortando."; exit 1; }
 
-#for pct in "${#at1[@]}"; do
-
 antigo="$(pwd)"
 caminho="$HOME/.cache/magico"
+aur="https://aur.archlinux.org"
+
 [ ! -d $caminho ] && mkdir -p $caminho
 cd $caminho
 
@@ -135,6 +135,20 @@ pesquisar() {
   done
   echo
   echo -e "Número de resultados: $total"
+}
+
+instalar() {
+  local p
+  for p in "$@"; do
+    url="${aur}/cgit/aur.git/snapshot/${p}.tar.gz"
+    if curl --output /dev/null --silent --head --fail "$url"; then
+      curl -s -O "$url"
+      tar xzf "${p}.tar.gz"
+    else
+      echo "O pacote $p não existe no AUR."
+      #exit 1
+    fi
+  done
 }
 
 if [[ "$1" == "-Sw" ]]; then
