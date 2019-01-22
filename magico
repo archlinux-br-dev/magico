@@ -84,7 +84,8 @@ atualizar() {
 
   for p in $pacotes; do
     vlocal=$(pacman -Q $p | awk '{print $2}')
-    vremota=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.results[0].Version')
+    #vremota=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.results[0].Version')
+    vremota=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.version')
     if [ $vlocal != $vremota ]; then
       echo -e "${cinza}::${rst} ${azul}Analizando: $p -> $vlocal -> $vremota${rst}"
       pct+="$p $vlocal $vremota"
