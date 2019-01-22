@@ -16,7 +16,7 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "O aplicativo jq não está instalad
 
 #for pct in "${#at1[@]}"; do
 
-antigo=$(pwd)
+antigo="$(pwd)"
 caminho="$HOME/.cache/magico"
 [ ! -d $caminho ] && mkdir -p $caminho
 cd $caminho
@@ -45,22 +45,33 @@ baixar() {
   local packages
   local depends
   packages=$(pacman -Sl)
+
+  echo $packages
+  
   for arg in "$@"; do
     depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
+    
     if [[ $(echo -e "$depends" | jshon -e results) != "[]" ]]; then
       git clone https://aur.archlinux.org/"$arg".git 2> /dev/null
-      echo -e ":: $arg downloaded $caminho/$arg"
+      echo -e ":: $arg baixado em $caminho/$arg"
+    
       if [[ $(echo -e "$depends" | jshon -e results -e 0 -e Depends) != "[]" ]]; then
         depends=$(echo -e "$depends" | jshon -e results -e 0 -e Depends -a -u)
+
         for dep in $depends; do
           echo -e "$packages" | grep "$dep" > /dev/null
+    
           if [[ "$?" == 1 ]]; then
             baixar "$dep"
           fi
+    
         done
+
       fi
+    
     fi
   done
+
 }
 
 atualizar() {
