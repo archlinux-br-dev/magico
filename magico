@@ -144,6 +144,9 @@ instalar() {
     if curl --output /dev/null --silent --head --fail "$url"; then
       curl -s -O "$url"
       tar xzf "${p}.tar.gz"
+      cd $p
+      makepkg -si
+      cd ..
     else
       echo "O pacote $p não existe no AUR."
       #exit 1
