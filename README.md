@@ -1,6 +1,6 @@
 # magico
 
-Um AUR Helper minimalista, escrito em bash e com apenas uma dependencia.
+Um AUR Helper minimalista, escrito em bash e com apenas duas dependencias.
 
 #### Pacotes
 
@@ -8,11 +8,12 @@ Um AUR Helper minimalista, escrito em bash e com apenas uma dependencia.
 
 ## Features
 
-* Feito em Bash, apenas uma dependência.
+* Feito em Bash, apenas duas dependências.
 
 ## Dependências
 
 * `jq`
+* `jshon`
 
 ## Instalação
 

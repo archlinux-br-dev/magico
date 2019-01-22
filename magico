@@ -13,6 +13,7 @@
 ### PROGRAMA EM FASE EXPERIMENTAL!!! ###
 
 command -v jq >/dev/null 2>&1 || { echo >&2 "O aplicativo jq não está instalado. Abortando."; exit 1; }
+command -v jshon >/dev/null 2>&1 || { echo >&2 "O aplicativo jshon não está instalado. Abortando."; exit 1; }
 
 #for pct in "${#at1[@]}"; do
 
@@ -46,8 +47,6 @@ baixar() {
   local depends
   packages=$(pacman -Sl)
 
-  echo $packages
-  
   for arg in "$@"; do
     depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
     
