@@ -139,8 +139,8 @@ elif [[ "$1" == "-S" ]]; then
   shift
   instalar "$@"
 else
-  echo -e "Uso: $(basename $0) -Syu"
-  echo -e "     $(basename $0) -Ss pacote"
-  echo -e "     $(basename $0) -S pacote"
-  echo -e "     $(basename $0) -Sw pacote"
+  echo -e "Uso: $(basename $0) $roxo-Syu$rst"
+  echo -e "     $(basename $0) $roxo-Ss$rst pacote"
+  echo -e "     $(basename $0) $roxo-S$rst pacote"
+  echo -e "     $(basename $0) $roxo-Sw$rst pacote"
 fi

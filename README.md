@@ -37,6 +37,6 @@ Em breve...
 * `magico -S` instala um pacote do AUR
 * `magico -Sw` baixa um pacote sem instalar
 
-## Screenshots
+## Screenshot
 
-Em breve...
+[screenshot]: https://raw.githubusercontent.com/archlinux-br-dev/magico/master/screenshot.png "Screenshot"
