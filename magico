@@ -114,7 +114,7 @@ pesquisar() {
       while [[ $n < $total ]]; do
         nome=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Name")
         versao=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Version")
-        echo -e ":: [$n] aur/$nome $versao"
+        echo -e ":: [$n] aur/$amarelo$nome $vermelho$versao$rst"
         let n++
       done
     else
@@ -140,6 +140,7 @@ elif [[ "$1" == "-S" ]]; then
   instalar "$@"
 else
   echo -e "Uso: $(basename $0) -Syu"
+  echo -e "     $(basename $0) -Ss pacote"
   echo -e "     $(basename $0) -S pacote"
   echo -e "     $(basename $0) -Sw pacote"
 fi
