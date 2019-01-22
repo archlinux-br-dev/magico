@@ -26,9 +26,10 @@ makepkg -si
 
 Colaboradores são bem-vindos!
 
-## FAQ
+## Perguntas frequentes
 
-Em breve...
+#### Porquê magico?
+  Porque ele é mágico :)
 
 ## Uso
 
@@ -38,5 +39,7 @@ Em breve...
 * `magico -Sw` baixa um pacote sem instalar
 
 ## Screenshot
+
+![ScreenShot][screenshot]
 
 [screenshot]: https://raw.githubusercontent.com/archlinux-br-dev/magico/master/screenshot.png "Screenshot"
