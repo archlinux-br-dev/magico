@@ -85,30 +85,25 @@ atualizar() {
   for p in $pacotes; do
     vlocal="$(pacman -Q $p | awk '{print $2}')"
     vremota="$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.results[0].Version')"
-    #vremota=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.version')
     if [ "$vlocal" != "$vremota" ] && [ "$vremota" != null ]; then
-      echo -e "${cinza}::${rst} ${azul}Analizando: $p -> $vlocal -> $vremota${rst}"
+      #echo -e "${cinza}::${rst} ${azul}Analizando: $p -> $vlocal -> $vremota${rst}"
       pct+="$p $vlocal $vremota"
       let n++
     fi
   done
 
   if [ $n > 0 ]; then
+    echo
     echo -e ":: Existem atualizações."
+    echo
 
-    #for K in "${!MYMAP[@]}"; do echo $K --- ${MYMAP[$K]}; done
     for e in "${!pct[@]}"; do
       pa=$(echo ${pct[$e]} | awk '{print $1}')
       old=$(echo ${pct[$e]} | awk '{print $2}')
       new=$(echo ${pct[$e]} | awk '{print $3}')
-      #echo -e "$e $pa -> $old -> $new\n"
-      echo -e "$e $pa -> $old -> $new\n"
-      #printf "%s" "${sentence[$element]}"
+      echo -e ":: [${e}] $pa -> $vermelho$old$rst -> $azul$new$rst\n"
     done
 
-    #for pc in $n; do
-    #  echo -e ":: ${#pct[@]} ${pct[@]}"
-    #done
   else
     echo -e ":: Todos os pacotes estão atualizados."
   fi
