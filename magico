@@ -19,6 +19,7 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "O aplicativo jq não está instalad
 antigo=$(pwd)
 caminho="$HOME/.cache/magico"
 [ ! -d $caminho ] && mkdir -p $caminho
+cd $caminho
 
 
 # Cores
@@ -44,7 +45,6 @@ baixar() {
   local packages
   local depends
   packages=$(pacman -Sl)
-  cd $caminho || exit
   for arg in "$@"; do
     depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
     if [[ $(echo -e "$depends" | jshon -e results) != "[]" ]]; then
@@ -55,7 +55,7 @@ baixar() {
         for dep in $depends; do
           echo -e "$packages" | grep "$dep" > /dev/null
           if [[ "$?" == 1 ]]; then
-            download "$dep"
+            baixar "$dep"
           fi
         done
       fi
@@ -144,3 +144,6 @@ else
   echo -e "     $(basename $0) $roxo-S$rst pacote"
   echo -e "     $(basename $0) $roxo-Sw$rst pacote"
 fi
+
+cd $antigo
+exit
