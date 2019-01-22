@@ -12,6 +12,8 @@
 
 ### PROGRAMA EM FASE EXPERIMENTAL!!! ###
 
+command -v jq >/dev/null 2>&1 || { echo >&2 "O aplicativo jq não está instalado. Abortando."; exit 1; }
+
 #for pct in "${#at1[@]}"; do
 
 antigo=$(pwd)
