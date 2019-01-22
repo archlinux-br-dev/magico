@@ -164,7 +164,7 @@ elif [[ "$1" == "-S" ]]; then
 else
   echo -e "Uso: $(basename $0) $roxo-Syu$rst"
   echo -e "     $(basename $0) $roxo-Ss$rst pacote"
-  echo -e "     $(basename $0) $roxo-S$rst pacote"
+  echo -e "     $(basename $0) $roxo-S$rst  pacote"
   echo -e "     $(basename $0) $roxo-Sw$rst pacote"
 fi
 
