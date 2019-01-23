@@ -12,7 +12,7 @@ git clone https://aur.archlinux.org/magico $cache
 cd $cache
 
 echo "Instalando o magico..."
-makepkg -si 1> /dev/null
+makepkg -si --noconfirm 1> /dev/null 2> /dev/null
 
 clear
 echo "Tudo pronto!"
