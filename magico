@@ -100,15 +100,15 @@ atualizar() {
       pa=$(echo ${pct[$e]} | awk '{print $1}')
       old=$(echo ${pct[$e]} | awk '{print $2}')
       new=$(echo ${pct[$e]} | awk '{print $3}')
-      echo -e ":: [${e}] $pa -> $vermelho$old$rst -> $azul$new$rst\n"
+      echo -e ":: [$roxo${e}$rst] $amarelo$pa$rst -> $vermelho$old$rst -> $azul$new$rst\n"
     done
     echo -e ":: Existem $n atualizações disponíveis."
     echo
     read -n1 -p ":: Deseja atualizar? [s/N]: " at
 
-    if [ "$at" == [sS] ]; then
+    if [ "$at" == "[sS]" ]; then
       for e in "${!pct[@]}"; do
-        instalar "${pct[$e]}"
+        instalar ${pct[$e]}
       done
     fi
 
@@ -121,24 +121,24 @@ pesquisar() {
   n=0
   for p in "$@"; do
     echo 
-    echo -e ":: Pesquisando $p no AUR..."
+    echo -e ":: Pesquisando $vermelho$p$rst no AUR..."
     total=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=$p" | jq '.results | length')
 
     if [ $total ]; then
       while [[ $n < $total ]]; do
         nome=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Name")
         versao=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=${p}" | jq -r ".results[$n].Version")
-        echo -e ":: [$n] aur/$amarelo$nome $vermelho$versao$rst"
+        echo -e ":: [$roxo$n$rst] ${azul}aur$rst/$amarelo$nome $vermelho$versao$rst"
         let n++
       done
     else
-      echo -e "Nenhum pacote com o nome $p encontrado."
+      echo -e ":: Nenhum pacote com o nome $vermelho$p$rst encontrado."
       echo
     fi
 
   done
   echo
-  echo -e "Número de resultados: $total"
+  echo -e ":: Número de resultados: $total"
 }
 
 instalar() {
