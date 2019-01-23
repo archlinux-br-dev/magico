@@ -3,7 +3,7 @@
 cache="/tmp/magico-cache"
 
 echo "Instalando dependencias..."
-pacman -Syu jq jshon git
+sudo pacman -Syu jq jshon git
 
 echo "Clonando o magico..."
 [ -d $cache ] && rm -rf $cache 
