@@ -2,6 +2,7 @@
 
 # read -r -d '' logo <<'EOF'
 IFS='' read -r -d '' logo <<'EOF'
+
 Bem vindo ao script de instalação do:
                        _           
  _ __ ___   __ _  __ _(_) ___ ___  
@@ -11,7 +12,7 @@ Bem vindo ao script de instalação do:
                  |___/             
 EOF
 
-echo "$logo"
+echo -e "\033[00;35m$logo\033[0m"
 
 cache="/tmp/magico-cache"
 
@@ -28,6 +29,6 @@ echo "Instalando o magico..."
 makepkg -si --noconfirm 1> /dev/null 2> /dev/null
 
 clear
-echo "Tudo pronto!"
+echo -ne "Tudo pronto!\n"
 
 exit

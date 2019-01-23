@@ -42,6 +42,26 @@ roxoc='\033[01;35m'
 cianoc='\033[01;36m'
 branco='\033[01;37m'
 
+versao() {
+IFS='' read -r -d '' logo <<'EOF'
+                       _           
+ _ __ ___   __ _  __ _(_) ___ ___  
+| '_ ` _ \ / _` |/ _` | |/ __/ _ \ 
+| | | | | | (_| | (_| | | (_| (_) |
+|_| |_| |_|\__,_|\__, |_|\___\___/ 
+                 |___/             
+
+EOF
+
+echo -e "\033[00;35m$logo\033[0m"
+echo -e "Um AUR helper para o Arch Linux."
+echo -e "Versão: 0.2b"
+}
+
+ajuda() {
+  
+}
+
 baixar() {
   local packages
   local depends
@@ -187,6 +207,9 @@ elif [[ "$1" == "-Ss" ]]; then
 elif [[ "$1" == "-S" ]]; then
   shift
   instalar "$@"
+elif [[ "$1" == "-v" ]] || [[ "$1" == "--version" ]]; then
+  shift
+  versao
 else
   echo -e "Uso: $(basename $0) $roxo-Syu$rst"
   echo -e "     $(basename $0) $roxo-Ss$rst pacote"
