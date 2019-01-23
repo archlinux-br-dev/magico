@@ -1,1 +1,20 @@
-install.sh
+#!/bin/bash
+
+cache="/tmp/magico-cache"
+
+echo "Instalando dependencias..."
+pacman -Syu jq jshon git
+
+echo "Clonando o magico..."
+[ -d $cache ] && rm -rf $cache 
+mkdir -p $cache 
+git clone https://aur.archlinux.org/magico $cache
+cd $cache
+
+echo "Instalando o magico..."
+makepkg -si 2> /dev/null
+
+clear
+echo "Tudo pronto!"
+
+exit
