@@ -138,7 +138,7 @@ pesquisar() {
 instalar() {
   local p
   for p in "$@"; do
-    if pacman -Ssq $p > /dev/null; then
+    if pacman -Ssq "^${p}$" > /dev/null; then
       echo "O pacote $p existe nos repositórios oficiais."
     else
       url="${aur}/cgit/aur.git/snapshot/${p}.tar.gz"
