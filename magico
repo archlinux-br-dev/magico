@@ -138,18 +138,22 @@ pesquisar() {
 instalar() {
   local p
   for p in "$@"; do
-    url="${aur}/cgit/aur.git/snapshot/${p}.tar.gz"
-    if curl --output /dev/null --silent --head --fail "$url"; then
-      curl -s -O "$url"
-      tar xzf "${p}.tar.gz"
-      cd $p
-      makepkg -si
-      cd ..
+    if pacman -Ssq $p > /dev/null; then
+      echo "O pacote $p existe nos repositórios oficiais."
     else
-      if pacman -Ssq $p > /dev/null; then
-        echo "O pacote $p existe nos repositórios oficiais."
+      url="${aur}/cgit/aur.git/snapshot/${p}.tar.gz"
+      if curl --output /dev/null --silent --head --fail "$url"; then
+        curl -s -O "$url"
+        tar xzf "${p}.tar.gz"
+        cd $p
+        makepkg -si
+        cd ..
       else
-        echo "O pacote $p não foi encontrado."
+        if pacman -Ssq $p > /dev/null; then
+          echo "O pacote $p existe nos repositórios oficiais."
+        else
+          echo "O pacote $p não foi encontrado."
+        fi
       fi
     fi
   done
