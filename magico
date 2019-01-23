@@ -153,7 +153,9 @@ instalar() {
           curl -s -O "$url"
           tar xzf "${p}.tar.gz"
           cd $p
-          makepkg -si
+          echo "Instalando ${p}..."
+          sleep 3
+          makepkg -si --noconfirm 1> /dev/null 2> /dev/null          
           cd ..
         else
           if pacman -Ssq $p > /dev/null; then
