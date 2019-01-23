@@ -146,8 +146,11 @@ instalar() {
       makepkg -si
       cd ..
     else
-      echo "O pacote $p não existe no AUR."
-      #exit 1
+      if pacman -Ssq $p > /dev/null; then
+        echo "O pacote $p existe nos repositórios oficiais."
+      else
+        echo "O pacote $p não foi encontrado."
+      fi
     fi
   done
 }
