@@ -94,7 +94,7 @@ atualizar() {
     fi
   done
 
-  if [ "$n" > 0 ]; then
+  if [ "$n" != "0" ]; then
     echo
     echo -e ":: Existem atualizações."
     echo $n
