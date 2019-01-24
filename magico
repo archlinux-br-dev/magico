@@ -8,7 +8,7 @@
 # Repositório: https://github.com/archlinux-br-dev/magico
 #
 # Criado em:        31/05/2018 19:39:27
-# Última alteração: 24/01/2019 14:28:15
+# Última alteração: 24/01/2019 14:56:46
 # Versão 0.2b
 
 ### PROGRAMA EM FASE EXPERIMENTAL!!! ###
@@ -73,9 +73,9 @@ ajuda() {
 }
 
 baixar() {
-  local packages
+  local pacotes
   local depends
-  packages=$(pacman -Sl)
+  pacotes=$(pacman -Sl)
 
   for arg in "$@"; do
     depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
@@ -88,7 +88,7 @@ baixar() {
         depends=$(echo -e "$depends" | jshon -e results -e 0 -e Depends -a -u)
 
         for dep in $depends; do
-          echo -e "$packages" | grep "$dep" > /dev/null
+          echo -e "$pacotes" | grep "$dep" > /dev/null
     
           if [[ "$?" == 1 ]]; then
             baixar "$dep"
@@ -105,6 +105,7 @@ baixar() {
 
 atualizar() {
   n=0
+  local pacotes
   declare -a pct
 
   pacotes=$(pacman -Qqm)
@@ -161,13 +162,13 @@ pesquisar() {
         let n++
       done
     else
-      echo -e ":: Nenhum pacote com o nome $vermelho$p$rst encontrado."
+      echo -e ":: Nenhum pacote com o nome $vermelho$p$rst encontrado.\n"
       echo
     fi
 
   done
   echo
-  echo -e ":: Número de resultados: $total"
+  echo -e ":: Número de resultados: $total\n"
 }
 
 instalar() {

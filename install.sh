@@ -1,4 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Arquivo: install.sh
+# Descrição: Installer para o magico (https://aur.archlinux.org)
+#
+# Feito por Arch Linux BR Dev Team (https://github.com/archlinux-br-dev)
+# Site do Projeto: https://archlinux-br-dev.github.io/magico
+# Repositório: https://github.com/archlinux-br-dev/magico
+#
+# Criado em:        31/05/2018 19:39:27
+# Última alteração: 24/01/2019 14:57:27
 
 # read -r -d '' logo <<'EOF'
 IFS='' read -r -d '' logo <<'EOF'
