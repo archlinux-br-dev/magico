@@ -62,7 +62,6 @@ EOF
 }
 
 ajuda() {
-
   echo -e "\nUso: $(basename $0) $roxo-Syu$rst"
   echo -e "Atualiza todos os pacotes.\n"
   echo -e "     $(basename $0) $roxo-Ss$rst pacote"
@@ -70,8 +69,7 @@ ajuda() {
   echo -e "     $(basename $0) $roxo-S$rst  pacote"
   echo -e "Instala um pacote do AUR.\n"
   echo -e "     $(basename $0) $roxo-Sw$rst pacote"
-  echo -e "Baixa um pacote do AUR.\n"
-  
+  echo -e "Baixa um pacote do AUR.\n"  
 }
 
 baixar() {
