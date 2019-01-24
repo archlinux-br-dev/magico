@@ -58,10 +58,19 @@ EOF
   echo -e "\033[00;35m$logo\033[0m"
   echo -e "Um AUR helper para o Arch Linux."
   echo -e "Versão: 0.2b"
-  
+
 }
 
 ajuda() {
+
+  echo -e "\nUso: $(basename $0) $roxo-Syu$rst"
+  echo -e "Atualiza todos os pacotes.\n"
+  echo -e "     $(basename $0) $roxo-Ss$rst pacote"
+  echo -e "Pesquisa um pacote no AUR.\n"
+  echo -e "     $(basename $0) $roxo-S$rst  pacote"
+  echo -e "Instala um pacote do AUR.\n"
+  echo -e "     $(basename $0) $roxo-Sw$rst pacote"
+  echo -e "Baixa um pacote do AUR.\n"
   
 }
 
@@ -213,10 +222,7 @@ elif [[ "$1" == "-v" ]] || [[ "$1" == "--version" ]]; then
   shift
   versao
 else
-  echo -e "Uso: $(basename $0) $roxo-Syu$rst"
-  echo -e "     $(basename $0) $roxo-Ss$rst pacote"
-  echo -e "     $(basename $0) $roxo-S$rst  pacote"
-  echo -e "     $(basename $0) $roxo-Sw$rst pacote"
+  ajuda
 fi
 
 cd $antigo
