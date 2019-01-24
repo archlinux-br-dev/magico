@@ -8,7 +8,8 @@
 # Repositório: https://github.com/archlinux-br-dev/magico
 #
 # Criado em:        31/05/2018 19:39:27
-# Última alteração: 23/01/2019 13:57:24
+# Última alteração: 24/01/2019 14:28:15
+# Versão 0.2b
 
 ### PROGRAMA EM FASE EXPERIMENTAL!!! ###
 
@@ -43,6 +44,7 @@ cianoc='\033[01;36m'
 branco='\033[01;37m'
 
 versao() {
+
 IFS='' read -r -d '' logo <<'EOF'
                        _           
  _ __ ___   __ _  __ _(_) ___ ___  
@@ -53,9 +55,10 @@ IFS='' read -r -d '' logo <<'EOF'
 
 EOF
 
-echo -e "\033[00;35m$logo\033[0m"
-echo -e "Um AUR helper para o Arch Linux."
-echo -e "Versão: 0.2b"
+  echo -e "\033[00;35m$logo\033[0m"
+  echo -e "Um AUR helper para o Arch Linux."
+  echo -e "Versão: 0.2b"
+  
 }
 
 ajuda() {
@@ -122,8 +125,7 @@ atualizar() {
       new=$(echo ${pct[$e]} | awk '{print $3}')
       echo -e ":: [$roxo${e}$rst] $amarelo$pa$rst -> $vermelho$old$rst -> $azul$new$rst\n"
     done
-    echo -e ":: Existem $n atualizações disponíveis."
-    echo
+    echo -e ":: Existem $n atualizações disponíveis.\n"
     read -n1 -p ":: Deseja atualizar? [s/N]: " at
 
     if [ "$at" == "[sS]" ]; then
@@ -133,7 +135,7 @@ atualizar() {
     fi
 
   else
-    echo -e ":: Todos os pacotes estão atualizados."
+    echo -e ":: Todos os pacotes estão atualizados.\n" 
   fi
 }
 
