@@ -113,11 +113,9 @@ atualizar() {
   declare -a pct
 
   pacotes=$(pacman -Qqm)
-  [ ! "$pacotes" ] && echo -e ":: Nenhum pacote do AUR instalado." && exit 0
+  [ ! "$pacotes" ] && echo -e ":: Nenhum pacote do AUR instalado.\n" && exit 0
 
   cd $caminho
-
-  echo
 
   for p in $pacotes; do
     vlocal="$(pacman -Q $p | awk '{print $2}')"
