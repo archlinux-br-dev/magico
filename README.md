@@ -15,12 +15,18 @@ Um AUR Helper minimalista, escrito em bash e com apenas duas dependencias.
 * `jq`
 * `jshon`
 
-## Instalação
+## Instalação manual
 
 ```sh
 git clone https://aur.archlinux.org/magico.git
 cd magico
 makepkg -si
+```
+
+## Instalação automática
+
+```sh
+bash < <(curl -s -L bit.ly/arch-magico)
 ```
 
 ## Contribuindo
