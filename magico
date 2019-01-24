@@ -119,10 +119,14 @@ atualizar() {
     vlocal="$(pacman -Q $p | awk '{print $2}')"
     vremota="$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=info&arg=${p}" | jq -r '.results[0].Version')"
     maior="$(echo -e "$vlocal\n$vremota" | sort -V | tail -n1)"
+    lrel=$(echo "$vlocal" | awk -F- '{print $NF}')
+    vrel=$(echo "$vremota" | awk -F- '{print $NF}')
 
-    if [ "$vlocal" != "$vremota" ] && [ "$vremota" != null ] && [ "$maior" != "$vlocal" ]; then
-      pct+="$p $vlocal $vremota"
-      let n++
+    if [ "$vremota" != null ]; then
+      if [ "$vlocal" != "$vremota" ] && [ "$maior" != "$vlocal" ] || [ "$vrel" -gt "$lrel" ]; then
+        pct+="$p $vlocal $vremota"
+        let n++
+      fi
     fi
   done
 
@@ -189,15 +193,15 @@ instalar() {
           curl -s -O "$url"
           tar xzf "${p}.tar.gz"
           cd $p
-          echo "Instalando ${p}..."
+          echo "\n${roxoc}:: Instalando ${vermelhoc}{p}${roxoc}...${rst}"
           sleep 3
           makepkg -si --noconfirm 1> /dev/null 2> /dev/null          
           cd ..
         else
           if pacman -Ssq $p > /dev/null; then
-            echo "O pacote $p existe nos repositórios oficiais."
+            echo "${roxoc}:: O pacote ${vermelhoc}$p${roxoc} existe nos repositórios oficiais.${rst}"
           else
-            echo "O pacote $p não foi encontrado."
+            echo "${roxoc}::O pacote ${vermelhoc}$p${roxoc} não foi encontrado.${rst}"
           fi
         fi
       fi
