@@ -8,7 +8,7 @@
 # Repositório: https://github.com/archlinux-br-dev/magico
 #
 # Criado em:        31/05/2018 19:39:27
-# Última alteração: 24/01/2019 14:57:27
+# Última alteração: 24/01/2019 15:17:57
 
 # read -r -d '' logo <<'EOF'
 IFS='' read -r -d '' logo <<'EOF'
