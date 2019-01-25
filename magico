@@ -46,12 +46,12 @@ branco='\033[01;37m'
 versao() {
 
 IFS='' read -r -d '' logo <<'EOF'
-                       _           
- _ __ ___   __ _  __ _(_) ___ ___  
+                       _
+ _ __ ___   __ _  __ _(_) ___ ___
 | '_ ` _ \ / _` |/ _` | |/ __/ _ \ 
 | | | | | | (_| | (_| | | (_| (_) |
-|_| |_| |_|\__,_|\__, |_|\___\___/ 
-                 |___/             
+|_| |_| |_|\__,_|\__, |_|\___\___/
+                 |___/
 
 EOF
 
@@ -69,11 +69,11 @@ ajuda() {
   echo -e "     $(basename $0) $roxo-S$rst  pacote"
   echo -e "Instala um pacote do AUR.\n"
   echo -e "     $(basename $0) $roxo-Sw$rst pacote"
-  echo -e "Baixa um pacote do AUR.\n"  
+  echo -e "Baixa um pacote do AUR.\n"
   echo -e "     $(basename $0) $roxo-v$rst"
-  echo -e "Mostra a versão do programa.\n"    
+  echo -e "Mostra a versão do programa.\n"
   echo -e "     $(basename $0) $roxo-h$rst"
-  echo -e "Exibe esta ajuda.\n"  
+  echo -e "Exibe esta ajuda.\n"
 }
 
 baixar() {
@@ -83,25 +83,25 @@ baixar() {
 
   for arg in "$@"; do
     depends=$(curl -sg "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]=$arg")
-    
+
     if [[ $(echo -e "$depends" | jshon -e results) != "[]" ]]; then
       git clone https://aur.archlinux.org/"$arg".git 2> /dev/null
       echo -e ":: $arg baixado em $caminho/$arg"
-    
+
       if [[ $(echo -e "$depends" | jshon -e results -e 0 -e Depends) != "[]" ]]; then
         depends=$(echo -e "$depends" | jshon -e results -e 0 -e Depends -a -u)
 
         for dep in $depends; do
           echo -e "$pacotes" | grep "$dep" > /dev/null
-    
+
           if [[ "$?" == 1 ]]; then
             baixar "$dep"
           fi
-    
+
         done
 
       fi
-    
+
     fi
   done
 
@@ -151,14 +151,14 @@ atualizar() {
     fi
 
   else
-    echo -e ":: Todos os pacotes estão atualizados.\n" 
+    echo -e ":: Todos os pacotes estão atualizados.\n"
   fi
 }
 
 pesquisar() {
   n=0
   for p in "$@"; do
-    echo 
+    echo
     echo -e ":: Pesquisando $vermelho$p$rst no AUR..."
     total=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=$p" | jq '.results | length')
 
@@ -184,7 +184,7 @@ instalar() {
   instalados="$(pacman -Q)"
 
   for p in "$@"; do
-    
+
     if pacman -Ssq "^${p}$" > /dev/null; then
       echo "O pacote $p existe nos repositórios oficiais."
     else
@@ -199,7 +199,7 @@ instalar() {
           cd $p
           echo "\n${roxoc}:: Instalando ${vermelhoc}{p}${roxoc}...${rst}"
           sleep 3
-          makepkg -si --noconfirm 1> /dev/null 2> /dev/null          
+          makepkg -si --noconfirm 1> /dev/null 2> /dev/null
           cd ..
         else
           if pacman -Ssq $p > /dev/null; then
