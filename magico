@@ -158,6 +158,7 @@ atualizar() {
 pesquisar() {
   n=0
   for p in "$@"; do
+    #TODO refatorar e melhorar essa parte.
     if [[ $5 ]]; then
         p="$1-$2-$3-$4-$5"
     elif [[ $4 ]]; then
