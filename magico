@@ -158,6 +158,15 @@ atualizar() {
 pesquisar() {
   n=0
   for p in "$@"; do
+    if [[ $5 ]]; then
+        p="$1-$2-$3-$4-$5"
+    elif [[ $4 ]]; then
+        p="$1-$2-$3-$4"
+    elif [[ $3 ]]; then
+        p="$1-$2-$3"
+    elif [[ $2 ]]; then
+        p="$1-$2"
+    fi
     echo
     echo -e ":: Pesquisando $vermelho$p$rst no AUR..."
     total=$(curl -s "https://aur.archlinux.org/rpc/?v=5&type=search&arg=$p" | jq '.results | length')
